@@ -38,7 +38,7 @@ public class BookingEntity
 
     public DateTime? RejectedOn { get; private set; }
 
-    public DateTime?CompletedOn { get; private set; }
+    public DateTime? CompletedOn { get; private set; }
 
     public DateTime? CancelledOn { get; private set; }
 
@@ -51,6 +51,7 @@ public class BookingEntity
     public BookingEntity() { }
 
     public BookingEntity(
+        Guid id,
         Property property,
         User guest,
         DateTime startDate,
@@ -58,21 +59,32 @@ public class BookingEntity
         int guestCount,
         decimal cleaningFee,
         decimal amenitiesUpCharge,
-        decimal priceForPeriod)
+        decimal priceForPeriod,
+        BookingStatus status,
+        DateTime createdAt,
+        DateTime? confirmedOn,
+        DateTime? rejectedOn,
+        DateTime? completedOn,
+        DateTime? cancelledOn,
+        Review? review)
     {
         if (endDate <= startDate)
-            throw new ArgumentException("End date must be after start date.");
+            throw new ArgumentException(
+                "End date must be after start date.");
 
         if (guestCount <= 0)
-            throw new ArgumentOutOfRangeException("The number of guests can't be zero or less.");
+            throw new ArgumentOutOfRangeException(
+                "The number of guests can't be zero or less.");
 
         if (guestCount > property.MaxGuests)
-            throw new ArgumentOutOfRangeException("The number of guests exceeds the expected amount for this property.");
+            throw new ArgumentOutOfRangeException(
+                "The number of guests exceeds the expected amount for this property.");
 
         if (cleaningFee < 0 || amenitiesUpCharge < 0 || priceForPeriod < 0)
-            throw new ArgumentException("An invalid amount of currency was added.");
+            throw new ArgumentException(
+                "An invalid amount of currency was added.");
 
-        Id = Guid.NewGuid();
+        Id = id;
 
         Property = property;
         PropertyId = property.Id;
@@ -88,9 +100,16 @@ public class BookingEntity
         PriceForPeriod = priceForPeriod;
         TotalPrice = cleaningFee + amenitiesUpCharge + priceForPeriod;
 
-        Status = BookingStatus.Pending;
+        Status = status;
 
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt;
         LastModifiedAt = CreatedAt;
+
+        ConfirmedOn = confirmedOn;
+        RejectedOn = rejectedOn;
+        CompletedOn = completedOn;
+        CancelledOn = cancelledOn;
+
+        Review = review;
     }
 }

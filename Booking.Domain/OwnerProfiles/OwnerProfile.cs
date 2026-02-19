@@ -28,13 +28,15 @@ public class OwnerProfile
         Guid userId,
         string identityCardNumber, 
         bool verificationStatus,
-        string creditCardNumber)
+        string? businessName,
+        string creditCardNumber,
+        DateTime createdAt)
     {
         UserId = userId;
         IdentityCardNumber = identityCardNumber;
         VerificationStatus = verificationStatus;
         CreditCardNumber = creditCardNumber;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt;
         LastModifiedAt = CreatedAt;
     }
 }

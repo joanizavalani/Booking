@@ -45,6 +45,7 @@ public class Property
     public Property() { }
 
     public Property(
+        Guid id,
         Guid ownerId,
         string name,
         string description,
@@ -59,7 +60,7 @@ public class Property
         DateTime lastModifiedAt,
         DateTime lastBookedOn)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         OwnerId = ownerId;
         Name = name;
         Description = description;

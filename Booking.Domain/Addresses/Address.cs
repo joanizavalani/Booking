@@ -20,8 +20,14 @@ public class Address
 
     public Address() { }
 
-    public Address(Country country, string city, string street, string postalCode)
+    public Address(
+        Guid id,
+        Country country,
+        string city,
+        string street,
+        string postalCode)
     {
+        Id = id;
         Country = country;
         City = city;
         Street = street;

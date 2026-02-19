@@ -25,32 +25,22 @@ public class Review
 
     public Review() { }
 
-    public Review(Guid bookingId, Guid guestId, decimal rating)
+    public Review(
+        Guid id,
+        Guid bookingId,
+        Guid guestId,
+        decimal rating,
+        string? comment,
+        DateTime createdAt)
     {
-        ValidateRating(rating);
+        if (rating < 1 || rating > 5 || (2 * rating) % 1 != 0)
+            throw new ArgumentException("Rating must be in 0.5 increments between 1 and 5 stars.");
 
-        Id = Guid.NewGuid();
-        BookingId = bookingId;
-        GuestId = guestId;
-        Rating = rating;
-        CreatedAt = DateTime.UtcNow;
-    }
-
-    public Review(Guid bookingId, Guid guestId, decimal rating, string comment)
-    {
-        ValidateRating(rating);
-
-        Id = Guid.NewGuid();
+        Id = id;
         BookingId = bookingId;
         GuestId = guestId;
         Rating = rating;
         Comment = comment;
-        CreatedAt = DateTime.UtcNow;
-    }
-
-    private void ValidateRating(decimal rating)
-    {
-        if (rating < 1 || rating > 5 || (2 * rating) % 1 != 0)
-            throw new ArgumentException("Rating must be in 0.5 increments between 1 and 5 stars.");
+        CreatedAt = createdAt;
     }
 }

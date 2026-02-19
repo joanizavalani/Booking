@@ -20,10 +20,13 @@ public class UserRole
 
     public UserRole() { }
 
-    public UserRole(Guid userId, Guid roleId)
+    public UserRole(
+        Guid userId,
+        Guid roleId,
+        DateTime assignedAt)
     {
         UserId = userId;
         RoleId = roleId;
-        AssignedAt = DateTime.UtcNow;
+        AssignedAt = assignedAt;
     }
 }

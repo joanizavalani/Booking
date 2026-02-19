@@ -20,7 +20,7 @@ public class User
 
     public string Password { get; private set; }
 
-    public string? PhoneNumber { get; private set; }
+    public string PhoneNumber { get; private set; }
 
     public string? ProfileImageUrl { get; private set; }
 
@@ -42,15 +42,26 @@ public class User
 
     public User() { }
 
-    public User(string firstName, string lastName, string email, string password)
+    public User(
+        Guid id,
+        string firstName,
+        string lastName,
+        string email,
+        string password,
+        string phoneNumber,
+        string? profileImageUrl,
+        bool isActive,
+        DateTime createdAt)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         Password = password;
+        PhoneNumber = phoneNumber;
+        ProfileImageUrl = profileImageUrl;
         IsActive = true;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt;
         LastModifiedAt = CreatedAt;
 
         UserRoles = new List<UserRole>();
