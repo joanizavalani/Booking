@@ -3,6 +3,7 @@ using Booking.Domain.OwnerProfiles;
 using Booking.Domain.Properties;
 using Booking.Domain.Reviews;
 using Booking.Domain.UserRoles;
+using Booking.Domain.Users.Dtos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Booking.Domain.Users;
@@ -68,5 +69,21 @@ public class User
         Properties = new List<Property>();
         Bookings = new List<BookingEntity>();
         Reviews = new List<Review>();
+    }
+
+    public static User CreateUser(CreateUserDto userDto, string passwordHash)
+    {
+        var id = Guid.NewGuid();
+
+        return new User(
+            id,
+            userDto.FirstName,
+            userDto.LastName,
+            userDto.Email,
+            passwordHash,
+            userDto.PhoneNumber,
+            null,
+            true,
+            DateTime.UtcNow);
     }
 }
