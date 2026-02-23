@@ -1,4 +1,4 @@
-﻿using Booking.Application;
+﻿using Booking.Application.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.Contracts;

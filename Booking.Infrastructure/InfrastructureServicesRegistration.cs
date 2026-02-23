@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Booking.Application.Contracts;
+using Booking.Application.Features.Users;
+using Booking.Infrastructure.Contracts;
+using Booking.Infrastructure.Repositories.Users;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +16,11 @@ public static class InfrastructureServicesRegistration
         services.AddDbContext<BookingDbContext>(options =>
             options.UseSqlServer(
             configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddScoped(
+            typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
