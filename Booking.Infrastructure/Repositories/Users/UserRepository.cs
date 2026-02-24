@@ -11,9 +11,9 @@ public class UserRepository
     public UserRepository(BookingDbContext dbContext)
         : base(dbContext) { }
 
-    public async Task<User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
         return await _dbSet.FirstOrDefaultAsync(
-            u => u.Email == email);
+            (u => u.Email == email), cancellationToken);
     }
 }

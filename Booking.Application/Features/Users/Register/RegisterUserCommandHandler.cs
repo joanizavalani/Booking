@@ -19,7 +19,7 @@ public class RegisterUserCommandHandler
     public async Task<Guid> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
         var existingUser =
-            await _userRepository.GetByEmailAsync(command.CreateUserDto.Email);
+            await _userRepository.GetByEmailAsync(command.CreateUserDto.Email, cancellationToken);
 
         if (existingUser != null)
             throw new Exception("A user with this email already exists.");

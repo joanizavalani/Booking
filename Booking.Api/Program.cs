@@ -1,6 +1,5 @@
 using Booking.Application;
 using Booking.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +9,6 @@ builder.Services.RegisterApplication();
 
 builder.Services.RegisterInfrastructure(
     builder.Configuration);
-
-//var connectionString = builder.Configuration
-//    .GetConnectionString("DefaultConnection");
-
-//builder.Services.AddDbContext<BookingDbContext>(options =>
-//    options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
