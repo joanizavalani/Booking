@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.Repositories.Users;
 
-public class UserRepository : GenericRepository<User>, IUserRepository
+public class UserRepository
+    : GenericRepository<User>, IUserRepository
 {
     public UserRepository(BookingDbContext dbContext)
         : base(dbContext) { }
