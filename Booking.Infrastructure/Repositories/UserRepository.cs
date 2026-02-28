@@ -3,7 +3,7 @@ using Booking.Domain.Users;
 using Booking.Infrastructure.Contracts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.Infrastructure.Repositories.Users;
+namespace Booking.Infrastructure.Repositories;
 
 public class UserRepository
     : GenericRepository<User>, IUserRepository

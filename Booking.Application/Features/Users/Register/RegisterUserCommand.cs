@@ -1,4 +1,4 @@
-﻿using Booking.Domain.Users.Dtos;
+﻿using Booking.Domain.Users;
 using MediatR;
 
 namespace Booking.Application.Features.Users.Register;

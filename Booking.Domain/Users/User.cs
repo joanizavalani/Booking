@@ -3,7 +3,6 @@ using Booking.Domain.OwnerProfiles;
 using Booking.Domain.Properties;
 using Booking.Domain.Reviews;
 using Booking.Domain.UserRoles;
-using Booking.Domain.Users.Dtos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Booking.Domain.Users;
@@ -19,7 +18,7 @@ public class User
 
     public string Email { get; private set; }
 
-    public string Password { get; private set; }
+    public string PasswordHash { get; private set; }
 
     public string PhoneNumber { get; private set; }
 
@@ -41,14 +40,14 @@ public class User
 
     public List<Review> Reviews { get; private set; }
 
-    public User() { }
+    private User() { }
 
-    public User(
+    private User(
         Guid id,
         string firstName,
         string lastName,
         string email,
-        string password,
+        string passwordHash,
         string phoneNumber,
         string? profileImageUrl,
         bool isActive,
@@ -58,7 +57,7 @@ public class User
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        Password = password;
+        PasswordHash = passwordHash;
         PhoneNumber = phoneNumber;
         ProfileImageUrl = profileImageUrl;
         IsActive = true;
@@ -71,19 +70,19 @@ public class User
         Reviews = new List<Review>();
     }
 
-    public static User CreateUser(CreateUserDto userDto, string passwordHash)
+    public static User CreateUser(CreateUserDto createUserDto, string passwordHash)
     {
         var id = Guid.NewGuid();
 
         return new User(
-            id,
-            userDto.FirstName,
-            userDto.LastName,
-            userDto.Email,
-            passwordHash,
-            userDto.PhoneNumber,
-            null,
-            true,
-            DateTime.UtcNow);
+            id: id,
+            firstName: createUserDto.FirstName,
+            lastName: createUserDto.LastName,
+            email: createUserDto.Email,
+            passwordHash: passwordHash,
+            phoneNumber: createUserDto.PhoneNumber,
+            profileImageUrl: null,
+            isActive: true,
+            createdAt: DateTime.UtcNow);
     }
 }

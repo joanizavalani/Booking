@@ -10,8 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure;
 
-public class BookingDbContext : DbContext {
-
+public class BookingDbContext
+    : DbContext
+{
     public BookingDbContext() { }
 
     public BookingDbContext (DbContextOptions<BookingDbContext> options)

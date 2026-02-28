@@ -7,13 +7,13 @@ public class GenericRepository<TEntity>
     : IGenericRepository<TEntity>
     where TEntity : class
 {
-    protected readonly BookingDbContext _context;
+    protected readonly BookingDbContext _dbContext;
     protected readonly DbSet<TEntity> _dbSet;
 
-    public GenericRepository(BookingDbContext context)
+    public GenericRepository(BookingDbContext dbContext)
     {
-        _context = context;
-        _dbSet = context.Set<TEntity>();
+        _dbContext = dbContext;
+        _dbSet = dbContext.Set<TEntity>();
     }
 
     public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

@@ -16,9 +16,9 @@ public class Role
 
     public List<UserRole> UserRoles { get; private set; }
 
-    public Role() { }
+    private Role() { }
 
-    public Role(
+    private Role(
         Guid id,
         string name,
         string description,

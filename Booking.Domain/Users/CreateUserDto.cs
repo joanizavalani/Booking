@@ -1,4 +1,4 @@
-﻿namespace Booking.Domain.Users.Dtos;
+﻿namespace Booking.Domain.Users;
 
 public record CreateUserDto
 {

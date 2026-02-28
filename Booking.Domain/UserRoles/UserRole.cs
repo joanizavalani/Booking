@@ -18,9 +18,9 @@ public class UserRole
 
     public Role Role { get; private set; }
 
-    public UserRole() { }
+    private UserRole() { }
 
-    public UserRole(
+    private UserRole(
         Guid userId,
         Guid roleId,
         DateTime assignedAt)
@@ -28,5 +28,13 @@ public class UserRole
         UserId = userId;
         RoleId = roleId;
         AssignedAt = assignedAt;
+    }
+
+    public static UserRole CreateUserRole(Guid userId, Guid roleId)
+    {
+        return new UserRole(
+            userId: userId,
+            roleId: roleId,
+            assignedAt: DateTime.UtcNow);
     }
 }
