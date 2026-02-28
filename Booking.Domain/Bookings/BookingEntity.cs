@@ -48,9 +48,9 @@ public class BookingEntity
 
     public Review? Review { get; private set; }
 
-    public BookingEntity() { }
+    private BookingEntity() { }
 
-    public BookingEntity(
+    private BookingEntity(
         Guid id,
         Property property,
         User guest,

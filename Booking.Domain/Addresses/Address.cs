@@ -8,7 +8,7 @@ public class Address
     [Key]
     public Guid Id { get; private set; }
 
-    public Country Country { get; private set; }
+    public string Country { get; private set; }
 
     public string City { get; private set; }
 
@@ -18,11 +18,11 @@ public class Address
 
     public List<Property> Properties { get; private set; }
 
-    public Address() { }
+    private Address() { }
 
-    public Address(
+    private Address(
         Guid id,
-        Country country,
+        string country,
         string city,
         string street,
         string postalCode)

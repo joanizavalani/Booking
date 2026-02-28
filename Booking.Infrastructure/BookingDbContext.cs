@@ -13,19 +13,17 @@ namespace Booking.Infrastructure;
 public class BookingDbContext
     : DbContext
 {
-    public BookingDbContext() { }
-
     public BookingDbContext (DbContextOptions<BookingDbContext> options)
         : base(options) { }
 
-    public DbSet<User> Users { get; private set; }
-    public DbSet<Role> Roles { get; private set; }
-    public DbSet<UserRole> UserRoles { get; private set; } 
-    public DbSet<OwnerProfile> OwnerProfiles { get; private set; }
-    public DbSet<Property> Properties { get; private set; }
-    public DbSet<Address> Addresses { get; private set; }
-    public DbSet<BookingEntity> Bookings { get; private set; }
-    public DbSet<Review> Reviews { get; private set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; } 
+    public DbSet<OwnerProfile> OwnerProfiles { get; set; }
+    public DbSet<Property> Properties { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<BookingEntity> Bookings { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
 

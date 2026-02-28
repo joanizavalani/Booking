@@ -23,9 +23,9 @@ public class Review
 
     public User Guest { get; private set; }
 
-    public Review() { }
+    private Review() { }
 
-    public Review(
+    private Review(
         Guid id,
         Guid bookingId,
         Guid guestId,

@@ -42,9 +42,9 @@ public class Property
 
     public List<BookingEntity> Bookings { get; private set; }
 
-    public Property() { }
+    private Property() { }
 
-    public Property(
+    private Property(
         Guid id,
         Guid ownerId,
         string name,

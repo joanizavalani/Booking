@@ -22,9 +22,9 @@ public class OwnerProfile
 
     public User User { get; private set; }
 
-    public OwnerProfile() { }
+    private OwnerProfile() { }
 
-    public OwnerProfile(
+    private OwnerProfile(
         Guid userId,
         string identityCardNumber, 
         bool verificationStatus,
