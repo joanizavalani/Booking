@@ -16,4 +16,10 @@ public class RoleRepository
         return await _dbSet
             .FirstOrDefaultAsync(r => r.IsDefault, cancellationToken);
     }
+
+    public async Task<Role?> GetOwnerRoleAsync(CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .FirstOrDefaultAsync(r => r.Name == RoleNames.Owner, cancellationToken);
+    }
 }

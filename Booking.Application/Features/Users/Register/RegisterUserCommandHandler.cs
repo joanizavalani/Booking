@@ -1,5 +1,6 @@
 ﻿using Booking.Application.Contracts;
 using Booking.Application.Contracts.Security;
+using Booking.Application.Exceptions;
 using Booking.Application.Features.Roles;
 using Booking.Domain.UserRoles;
 using Booking.Domain.Users;
@@ -34,7 +35,7 @@ public class RegisterUserCommandHandler
             await _userRepository.GetByEmailAsync(command.CreateUserDto.Email, cancellationToken);
 
         if (existingUser != null)
-            throw new Exception("A user with this email already exists.");
+            throw new BadRequestException("A user with this email already exists.");
 
         var passwordHash = _passwordHasher.HashPassword(
             command.CreateUserDto.Password);
@@ -46,10 +47,22 @@ public class RegisterUserCommandHandler
             await _roleRepository.GetDefaultRoleAsync(cancellationToken);
 
         if (defaultRole == null)
-            throw new Exception("Default role not configured.");
+            throw new NotFoundException("Default role not configured.");
+        else
+            user.UserRoles.Add(
+                UserRole.CreateUserRole(user.Id, defaultRole.Id));
 
-        user.UserRoles.Add(
-            UserRole.CreateUserRole(user.Id, defaultRole.Id));
+        if (command.CreateUserDto.IsOwner)
+        {
+            var ownerRole =
+                await _roleRepository.GetOwnerRoleAsync(cancellationToken);
+
+            if (ownerRole == null)
+                throw new NotFoundException("Owner role not found.");
+            else
+                user.UserRoles.Add(
+                    UserRole.CreateUserRole(user.Id, ownerRole.Id));
+        }
 
         await _userRepository.AddAsync(user, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

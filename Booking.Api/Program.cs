@@ -1,3 +1,4 @@
+using Booking.Api.Middlewares;
 using Booking.Application;
 using Booking.Infrastructure;
 
@@ -12,6 +13,7 @@ builder.Services.RegisterInfrastructure(
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();

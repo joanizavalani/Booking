@@ -11,4 +11,6 @@ public record CreateUserDto
     public string Password { get; init; }
 
     public string PhoneNumber { get; init; }
+
+    public bool IsOwner { get; init; }
 }

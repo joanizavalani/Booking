@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Contracts.Security;
+using Booking.Application.Exceptions;
 using Booking.Application.Features.UserRoles;
 using MediatR;
 
@@ -31,14 +32,14 @@ public class LoginUserCommandHandler
             await _userRepository.GetByEmailAsync(command.Email, cancellationToken);
 
         if (user == null)
-            throw new Exception("Invalid credentials.");
+            throw new UnauthorizedException("Invalid credentials.");
 
         if (!_passwordHasher.VerifyPassword(
                 command.Password, user.PasswordHash))
-            throw new Exception("Invalid credentials.");
+            throw new UnauthorizedException("Invalid credentials.");
 
         if (!user.IsActive)
-            throw new Exception("Invalid credentials.");
+            throw new UnauthorizedException("Invalid credentials.");
 
         var userRoles =
             await _userRoleRepository.GetAllUserRolesToListAsync(user.Id);

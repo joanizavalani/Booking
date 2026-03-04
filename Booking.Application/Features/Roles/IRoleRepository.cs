@@ -7,4 +7,6 @@ public interface IRoleRepository
     : IGenericRepository<Role>
 {
     Task<Role?> GetDefaultRoleAsync(CancellationToken cancellationToken);
+
+    Task<Role?> GetOwnerRoleAsync(CancellationToken cancellationToken);
 }
