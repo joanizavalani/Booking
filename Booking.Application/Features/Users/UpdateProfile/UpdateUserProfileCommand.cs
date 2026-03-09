@@ -2,7 +2,7 @@
 
 namespace Booking.Application.Features.Users.UpdateProfile;
 
-public class UpdateUserProfileCommand
+public record UpdateUserProfileCommand
     : IRequest<Guid>
 {
     public string? FirstName { get; init; }

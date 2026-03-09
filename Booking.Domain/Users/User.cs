@@ -96,5 +96,13 @@ public class User
 
         if (!string.IsNullOrWhiteSpace(phoneNumber))
             PhoneNumber = phoneNumber;
-    } 
+    }
+
+    public void UpdatePassword(string hashedPassword)
+    {
+        if (string.IsNullOrWhiteSpace(hashedPassword))
+            throw new ArgumentException("Password cannot be empty.");
+
+        PasswordHash = hashedPassword;
+    }
 }

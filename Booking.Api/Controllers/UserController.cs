@@ -1,4 +1,5 @@
-﻿using Booking.Application.Features.Users.Login;
+﻿using Booking.Application.Features.Users.ChangePassword;
+using Booking.Application.Features.Users.Login;
 using Booking.Application.Features.Users.Register;
 using Booking.Application.Features.Users.UpdateProfile;
 using Booking.Domain.Users;
@@ -76,6 +77,21 @@ public class UserController
             await _mediator.Send(command, cancellationToken);
 
         return Ok(new {
+            Id = userId
+        });
+    }
+
+    [HttpPut("change-password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword(
+        [FromBody] ChangePasswordCommand command,
+        CancellationToken cancellationToken)
+    {
+        var userId =
+            await _mediator.Send(command, cancellationToken);
+
+        return Ok(new
+        {
             Id = userId
         });
     }
