@@ -85,4 +85,16 @@ public class User
             isActive: true,
             createdAt: DateTime.UtcNow);
     }
+
+    public void UpdateUser(string? firstName, string? lastName, string? phoneNumber)
+    {
+        if (!string.IsNullOrWhiteSpace(firstName))
+            FirstName = firstName;
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+            LastName = lastName;
+
+        if (!string.IsNullOrWhiteSpace(phoneNumber))
+            PhoneNumber = phoneNumber;
+    } 
 }

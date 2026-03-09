@@ -32,7 +32,7 @@ public static class InfrastructureServicesRegistration
             .Get<JwtSettings>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+            .AddJwtBearer(options => 
             {
                 options.TokenValidationParameters =
                     new TokenValidationParameters

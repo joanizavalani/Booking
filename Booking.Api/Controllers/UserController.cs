@@ -1,5 +1,6 @@
 ﻿using Booking.Application.Features.Users.Login;
 using Booking.Application.Features.Users.Register;
+using Booking.Application.Features.Users.UpdateProfile;
 using Booking.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +37,7 @@ public class UserController
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(
-        [FromBody] LoginUserCommand loginUserCommand,
+        [FromBody] LoginUserCommand command,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -45,7 +46,7 @@ public class UserController
         try
         {
             var authResponse =
-                await _mediator.Send(loginUserCommand, cancellationToken);
+                await _mediator.Send(command, cancellationToken);
 
             return Ok(authResponse);
         }
@@ -63,5 +64,19 @@ public class UserController
     public IActionResult Me()
     {
         return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
+    }
+
+    [HttpPut("me")]
+    [Authorize]
+    public async Task<IActionResult> UpdateProfile(
+        [FromBody] UpdateUserProfileCommand command,
+        CancellationToken cancellationToken)
+    {
+        var userId =
+            await _mediator.Send(command, cancellationToken);
+
+        return Ok(new {
+            Id = userId
+        });
     }
 }
