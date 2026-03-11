@@ -35,7 +35,7 @@ public class ChangePasswordCommandHandler
         var user =
             await _userRepository.GetByIdAsync(userId.Value, cancellationToken);
 
-        if (user == null)
+        if (user == null || !user.IsActive)
             throw new NotFoundException("User not found.");
 
         if (!_passwordHasher.VerifyPassword(command.OldPassword, user.PasswordHash))

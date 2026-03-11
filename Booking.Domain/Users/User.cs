@@ -105,4 +105,9 @@ public class User
 
         PasswordHash = hashedPassword;
     }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+    }
 }

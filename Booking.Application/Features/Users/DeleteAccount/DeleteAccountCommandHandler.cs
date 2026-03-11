@@ -3,16 +3,16 @@ using Booking.Application.Contracts.Security;
 using Booking.Application.Exceptions;
 using MediatR;
 
-namespace Booking.Application.Features.Users.UpdateProfile;
+namespace Booking.Application.Features.Users.DeleteAccount;
 
-public class UpdateUserProfileCommandHandler
-    : IRequestHandler<UpdateUserProfileCommand, Guid>
+public class DeleteAccountCommandHandler
+    : IRequestHandler<DeleteAccountCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
 
-    public UpdateUserProfileCommandHandler(
+    public DeleteAccountCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
         ICurrentUserService currentUserService)
@@ -22,7 +22,7 @@ public class UpdateUserProfileCommandHandler
         _currentUserService = currentUserService;
     }
 
-    public async Task<Guid> Handle(UpdateUserProfileCommand command, CancellationToken cancellationToken)
+    public async Task Handle(DeleteAccountCommand command, CancellationToken cancellationToken)
     {
         var userId = _currentUserService.UserId;
 
@@ -35,11 +35,8 @@ public class UpdateUserProfileCommandHandler
         if (user == null || !user.IsActive)
             throw new NotFoundException("User not found.");
 
-        user.UpdateUser(
-            command.FirstName, command.LastName, command.PhoneNumber);
+        user.Deactivate();
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user.Id;
     }
 }

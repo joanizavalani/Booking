@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Features.Users.ChangePassword;
+using Booking.Application.Features.Users.DeleteAccount;
 using Booking.Application.Features.Users.Login;
 using Booking.Application.Features.Users.Register;
 using Booking.Application.Features.Users.UpdateProfile;
@@ -76,9 +77,21 @@ public class UserController
         var userId =
             await _mediator.Send(command, cancellationToken);
 
-        return Ok(new {
+        return Ok(new 
+        {
             Id = userId
         });
+    }
+
+
+    [HttpDelete("me")]
+    [Authorize]
+    public async Task<IActionResult> DeleteAccount(
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteAccountCommand(), cancellationToken);
+
+        return NoContent();
     }
 
     [HttpPut("change-password")]
