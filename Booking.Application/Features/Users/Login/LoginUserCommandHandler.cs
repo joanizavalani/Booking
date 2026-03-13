@@ -42,7 +42,7 @@ public class LoginUserCommandHandler
             throw new UnauthorizedException("Invalid credentials.");
 
         var userRoles =
-            await _userRoleRepository.GetAllUserRolesToListAsync(user.Id);
+            await _userRoleRepository.GetAllUserRolesToListAsync(user.Id, cancellationToken);
 
         var tokenResult
             = _tokenService.GenerateToken(user, userRoles);

@@ -11,11 +11,20 @@ public class UserRoleRepository
     public UserRoleRepository(BookingDbContext dbContext)
         : base(dbContext) { }
 
-    public async Task<List<UserRole>> GetAllUserRolesToListAsync(Guid userId)
+    public async Task<List<UserRole>> GetAllUserRolesToListAsync(Guid userId, CancellationToken cancellationToken)
     {
         return await _dbSet
             .Include(ur => ur.Role)
             .Where(ur => ur.UserId == userId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<bool> ExistsAsync(Guid userId, Guid roleId, CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .AnyAsync(ur =>
+                ur.UserId == userId
+                && ur.RoleId == roleId,
+                cancellationToken);
     }
 }

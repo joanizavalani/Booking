@@ -38,6 +38,9 @@ public class ChangePasswordCommandHandler
         if (user == null || !user.IsActive)
             throw new NotFoundException("User not found.");
 
+        if (command.OldPassword == command.NewPassword)
+            throw new BadRequestException("The new password cannot be the same as the old password.");
+
         if (!_passwordHasher.VerifyPassword(command.OldPassword, user.PasswordHash))
             throw new BadRequestException("Old password is incorrect.");
 

@@ -9,4 +9,8 @@ public interface IRoleRepository
     Task<Role?> GetDefaultRoleAsync(CancellationToken cancellationToken);
 
     Task<Role?> GetOwnerRoleAsync(CancellationToken cancellationToken);
+
+    Task<Role?> GetAdminRoleAsync(CancellationToken cancellationToken);
+
+    Task<Role?> GetRoleByNameAsync(string roleName, CancellationToken cancellationToken);
 }

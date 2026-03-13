@@ -22,4 +22,16 @@ public class RoleRepository
         return await _dbSet
             .FirstOrDefaultAsync(r => r.Name == RoleNames.Owner, cancellationToken);
     }
+
+    public async Task<Role?> GetAdminRoleAsync(CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .FirstOrDefaultAsync(r => r.Name == RoleNames.Admin, cancellationToken);
+    }
+
+    public async Task<Role?> GetRoleByNameAsync(string roleName, CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .FirstOrDefaultAsync(r => r.Name.ToLower() == roleName.ToLower(), cancellationToken);
+    }
 }
