@@ -20,13 +20,13 @@ public class RoleRepository
     public async Task<Role?> GetOwnerRoleAsync(CancellationToken cancellationToken)
     {
         return await _dbSet
-            .FirstOrDefaultAsync(r => r.Name == RoleNames.Owner, cancellationToken);
+            .FirstOrDefaultAsync(r => r.Name.ToLower() == RoleNames.Owner, cancellationToken);
     }
 
     public async Task<Role?> GetAdminRoleAsync(CancellationToken cancellationToken)
     {
         return await _dbSet
-            .FirstOrDefaultAsync(r => r.Name == RoleNames.Admin, cancellationToken);
+            .FirstOrDefaultAsync(r => r.Name.ToLower() == RoleNames.Admin, cancellationToken);
     }
 
     public async Task<Role?> GetRoleByNameAsync(string roleName, CancellationToken cancellationToken)

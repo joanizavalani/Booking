@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Features.UserRoles.AssignUserRole;
+using Booking.Application.Features.UserRoles.RemoveUserRole;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,17 @@ public class UserRoleController
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AssignUserRole(
         [FromBody] AssignUserRoleCommand command,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(command, cancellationToken);
+
+        return NoContent();
+    }
+
+    [HttpDelete("delete")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RemoveUserRole(
+        [FromBody] RemoveUserRoleCommand command,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);

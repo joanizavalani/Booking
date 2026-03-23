@@ -2,9 +2,9 @@
 
 public static class RoleNames
 {
-    public const string Guest = "Guest";
+    public const string Guest = "guest";
 
-    public const string Owner = "Owner";
+    public const string Owner = "owner";
 
-    public const string Admin = "Admin";
+    public const string Admin = "admin";
 }

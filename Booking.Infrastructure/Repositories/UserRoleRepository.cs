@@ -11,6 +11,15 @@ public class UserRoleRepository
     public UserRoleRepository(BookingDbContext dbContext)
         : base(dbContext) { }
 
+    public async Task<UserRole?> GetByUserIdAndRoleIdAsync(Guid userId, Guid roleId, CancellationToken cancellationToken)
+    {
+        return await _dbSet
+            .FirstOrDefaultAsync(ur =>
+                ur.UserId == userId
+                && ur.RoleId == roleId,
+                cancellationToken);
+    }
+
     public async Task<List<UserRole>> GetAllUserRolesToListAsync(Guid userId, CancellationToken cancellationToken)
     {
         return await _dbSet
