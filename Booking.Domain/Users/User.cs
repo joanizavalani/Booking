@@ -70,17 +70,29 @@ public class User
         Reviews = new List<Review>();
     }
 
-    public static User CreateUser(CreateUserDto createUserDto, string passwordHash)
+    public static User CreateUser(CreateUserDto dto, string passwordHash)
     {
         var id = Guid.NewGuid();
 
+        if (!string.IsNullOrEmpty(dto.FirstName))
+            throw new ArgumentException(
+                "First name cannot be empty.");
+
+        if (!string.IsNullOrEmpty(dto.FirstName))
+            throw new ArgumentException(
+                "Last name cannot be empty.");
+
+        if (!string.IsNullOrEmpty(dto.PhoneNumber))
+            throw new ArgumentException(
+                "Phone number cannot be empty.");
+
         return new User(
             id: id,
-            firstName: createUserDto.FirstName,
-            lastName: createUserDto.LastName,
-            email: createUserDto.Email,
+            firstName: dto.FirstName,
+            lastName: dto.LastName,
+            email: dto.Email,
             passwordHash: passwordHash,
-            phoneNumber: createUserDto.PhoneNumber,
+            phoneNumber: dto.PhoneNumber,
             profileImageUrl: null,
             isActive: true,
             createdAt: DateTime.UtcNow);
@@ -101,7 +113,8 @@ public class User
     public void UpdatePassword(string hashedPassword)
     {
         if (string.IsNullOrWhiteSpace(hashedPassword))
-            throw new ArgumentException("Password cannot be empty.");
+            throw new ArgumentException(
+                "Password cannot be empty.");
 
         PasswordHash = hashedPassword;
     }
@@ -109,5 +122,10 @@ public class User
     public void Deactivate()
     {
         IsActive = false;
+    }
+
+    public void UpdateModificationTime()
+    {
+        LastModifiedAt = DateTime.UtcNow;
     }
 }

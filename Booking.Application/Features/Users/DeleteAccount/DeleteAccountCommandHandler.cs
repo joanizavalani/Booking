@@ -37,6 +37,8 @@ public class DeleteAccountCommandHandler
 
         user.Deactivate();
 
+        user.UpdateModificationTime();
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

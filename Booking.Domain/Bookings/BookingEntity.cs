@@ -14,17 +14,11 @@ public class BookingEntity
 
     public Guid GuestId { get; private set; }
 
-    public DateTime StartDate { get; private set; }
+    public DateOnly StartDate { get; private set; }
 
-    public DateTime EndDate { get; private set; }
+    public DateOnly EndDate { get; private set; }
 
     public int GuestCount { get; private set; }
-
-    public decimal CleaningFee { get; private set; }
-
-    public decimal AmenitiesUpCharge { get; private set; }
-
-    public decimal PriceForPeriod { get; private set; }
 
     public decimal TotalPrice { get; private set; }
 
@@ -54,12 +48,9 @@ public class BookingEntity
         Guid id,
         Property property,
         User guest,
-        DateTime startDate,
-        DateTime endDate,
+        DateOnly startDate,
+        DateOnly endDate,
         int guestCount,
-        decimal cleaningFee,
-        decimal amenitiesUpCharge,
-        decimal priceForPeriod,
         BookingStatus status,
         DateTime createdAt,
         DateTime? confirmedOn,
@@ -80,10 +71,6 @@ public class BookingEntity
             throw new ArgumentOutOfRangeException(
                 "The number of guests exceeds the expected amount for this property.");
 
-        if (cleaningFee < 0 || amenitiesUpCharge < 0 || priceForPeriod < 0)
-            throw new ArgumentException(
-                "An invalid amount of currency was added.");
-
         Id = id;
 
         Property = property;
@@ -95,16 +82,15 @@ public class BookingEntity
         StartDate = startDate;
         EndDate = endDate;
 
-        CleaningFee = cleaningFee;
-        AmenitiesUpCharge = amenitiesUpCharge;
-        PriceForPeriod = priceForPeriod;
-        TotalPrice = cleaningFee + amenitiesUpCharge + priceForPeriod;
+        var nights = endDate.DayNumber - startDate.DayNumber;
+        TotalPrice = property.PricePerNight * nights;
 
+        GuestCount = guestCount;
         Status = status;
 
         CreatedAt = createdAt;
         LastModifiedAt = CreatedAt;
-
+        
         ConfirmedOn = confirmedOn;
         RejectedOn = rejectedOn;
         CompletedOn = completedOn;

@@ -67,6 +67,16 @@ public class BookingDbContext
         {
             entity.HasKey(p => p.Id);
 
+            entity.Property(p => p.PricePerNight).HasPrecision(18, 2);
+
+            entity.Property(p => p.CheckInTime).HasConversion(
+                t => t.ToTimeSpan(),
+                t => TimeOnly.FromTimeSpan(t));
+
+            entity.Property(p => p.CheckOutTime).HasConversion(
+                t => t.ToTimeSpan(),
+                t => TimeOnly.FromTimeSpan(t));
+
             entity.HasOne(p => p.Owner)
                 .WithMany(u => u.Properties)
                 .HasForeignKey(p => p.OwnerId);
@@ -85,9 +95,6 @@ public class BookingDbContext
         {
             entity.HasKey(b => b.Id);
 
-            entity.Property(b => b.CleaningFee).HasPrecision(18, 2);
-            entity.Property(b => b.AmenitiesUpCharge).HasPrecision(18, 2);
-            entity.Property(b => b.PriceForPeriod).HasPrecision(18, 2);
             entity.Property(b => b.TotalPrice).HasPrecision(18, 2);
 
             entity.HasOne(b => b.Property)

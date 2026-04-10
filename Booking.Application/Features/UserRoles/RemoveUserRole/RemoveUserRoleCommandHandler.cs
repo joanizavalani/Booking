@@ -39,6 +39,11 @@ public class RemoveUserRoleCommandHandler
                 StringComparison.OrdinalIgnoreCase))
             throw new BadRequestException("Default role cannot be removed.");
 
+        if (string.Equals(
+                normalizedRoleName, RoleNames.Admin,
+                StringComparison.OrdinalIgnoreCase))
+            throw new BadRequestException("Admin role cannot be removed.");
+
         var user =
             await _userRepository.GetByIdAsync(command.UserId, cancellationToken);
 

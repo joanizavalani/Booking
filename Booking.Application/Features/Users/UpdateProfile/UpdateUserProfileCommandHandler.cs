@@ -38,6 +38,8 @@ public class UpdateUserProfileCommandHandler
         user.UpdateUser(
             command.FirstName, command.LastName, command.PhoneNumber);
 
+        user.UpdateModificationTime();
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;

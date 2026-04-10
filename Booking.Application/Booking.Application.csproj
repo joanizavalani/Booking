@@ -17,4 +17,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Properties\CreateProperty\" />
+    <Folder Include="Features\Properties\UpdateProperty\" />
+  </ItemGroup>
+
 </Project>

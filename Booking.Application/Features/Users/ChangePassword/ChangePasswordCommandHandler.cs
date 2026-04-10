@@ -48,6 +48,8 @@ public class ChangePasswordCommandHandler
             _passwordHasher.HashPassword(command.NewPassword)
         );
 
+        user.UpdateModificationTime();
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.Id;
