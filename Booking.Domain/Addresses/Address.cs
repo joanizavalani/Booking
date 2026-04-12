@@ -35,4 +35,18 @@ public class Address
 
         Properties = new List<Property>();
     }
+
+    public static Address AddNewAddress(
+        string country,
+        string city,
+        string street,
+        string postalCode)
+    {
+        return new Address(
+            id: Guid.NewGuid(),
+            country: country,
+            city: city,
+            street: street,
+            postalCode: postalCode);
+    }
 }

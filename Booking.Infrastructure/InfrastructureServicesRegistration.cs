@@ -1,5 +1,7 @@
 ﻿using Booking.Application.Contracts;
 using Booking.Application.Contracts.Security;
+using Booking.Application.Features.Addresses;
+using Booking.Application.Features.Properties;
 using Booking.Application.Features.Roles;
 using Booking.Application.Features.UserRoles;
 using Booking.Application.Features.Users;
@@ -64,6 +66,10 @@ public static class InfrastructureServicesRegistration
         services.AddScoped<IRoleRepository, RoleRepository>();
 
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+
+        services.AddScoped<IPropertyRepository, PropertyRepository>();
+
+        services.AddScoped<IAddressRepository, AddressRepository>();
 
         return services;
     }

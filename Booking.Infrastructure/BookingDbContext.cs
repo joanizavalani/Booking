@@ -89,6 +89,10 @@ public class BookingDbContext
         modelBuilder.Entity<Address>(entity =>
         {
             entity.HasKey(p => p.Id);
+
+            entity.HasIndex(a =>
+                new { a.Country, a.City, a.Street, a.PostalCode })
+                    .IsUnique();
         });
 
         modelBuilder.Entity<BookingEntity>(entity =>

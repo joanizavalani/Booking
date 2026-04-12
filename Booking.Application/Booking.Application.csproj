@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Properties\CreateProperty\" />
     <Folder Include="Features\Properties\UpdateProperty\" />
   </ItemGroup>
 
