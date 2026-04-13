@@ -119,4 +119,56 @@ public class Property
             isActive: true,
             isApproved: true);
     }
+    public void Update(
+        string? name,
+        string? description,
+        PropertyType propertyType,
+        decimal? pricePerNight,
+        int? maxGuests,
+        TimeOnly? checkInTime,
+        TimeOnly? checkOutTime,
+        Guid addressId)
+    {
+        if (name != null)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name cannot be empty.");
+
+            Name = name.Trim();
+        }
+
+        if (description != null)
+        {
+            if (string.IsNullOrWhiteSpace(description))
+                throw new ArgumentException("Description cannot be empty.");
+
+            Description = description.Trim();
+        }
+
+        if (pricePerNight != null)
+        {
+            if (pricePerNight <= 0)
+                throw new ArgumentException("Price per night must be greater than 0.");
+
+            PricePerNight = pricePerNight.Value;
+        }
+
+        if (maxGuests != null)
+        {
+            if (maxGuests <= 0)
+                throw new ArgumentException("Max guests must be greater than 0.");
+
+            MaxGuests = maxGuests.Value;
+        }
+
+        if (checkInTime != null)
+            CheckInTime = checkInTime.Value;
+
+        if (checkOutTime != null)
+            CheckOutTime = checkOutTime.Value;
+
+        PropertyType = propertyType;
+        AddressId = addressId;
+        LastModifiedAt = DateTime.UtcNow;
+    }
 }

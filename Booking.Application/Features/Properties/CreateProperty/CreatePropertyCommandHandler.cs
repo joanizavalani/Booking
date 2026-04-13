@@ -75,8 +75,7 @@ public class CreatePropertyCommandHandler
             command.CreatePropertyDto,
             user.Id,
             address.Id,
-            propertyType
-            );
+            propertyType);
 
         await _propertyRepository.AddAsync(property, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

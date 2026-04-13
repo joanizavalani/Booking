@@ -7,9 +7,9 @@ namespace Booking.Application.Features.Properties.CreateProperty;
 public class CreatePropertyCommand
     : IRequest<Guid>
 {
-    public CreatePropertyDto CreatePropertyDto { get; set; }
+    public CreatePropertyDto CreatePropertyDto { get; init; }
 
-    public string PropertyType { get; set; }
+    public string PropertyType { get; init; }
 
     public string Country { get; init; }
 

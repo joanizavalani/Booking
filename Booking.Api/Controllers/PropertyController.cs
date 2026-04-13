@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Features.Properties.CreateProperty;
+using Booking.Application.Features.Properties.UpdateProperty;
 using Booking.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,17 +19,34 @@ public class PropertyController
         _mediator = mediator;
     }
 
-    [HttpPost("create-property")]
+    [HttpPost("create")]
     [Authorize(Roles = "Owner")]
     public async Task<IActionResult> CreateProperty(
         [FromBody] CreatePropertyCommand command,
         CancellationToken cancellationToken)
     {
-        var propertyId = await _mediator.Send(command, cancellationToken);
+        var propertyId =
+            await _mediator.Send(command, cancellationToken);
 
         return CreatedAtAction(
             nameof(CreateProperty),
             new { id = propertyId },
             new { Id = propertyId });
     }
+
+    [HttpPut("update")]
+    [Authorize(Roles = "Owner")]
+    public async Task<IActionResult> UpdateProperty(
+        [FromBody] UpdatePropertyCommand command,
+        CancellationToken cancellationToken)
+    {
+        var propertyId =
+            await _mediator.Send(command, cancellationToken);
+
+        return Ok(new
+        {
+            Id = propertyId
+        });
+    }
+
 }
