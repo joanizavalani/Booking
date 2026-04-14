@@ -1,6 +1,7 @@
 ﻿using Booking.Application.Features.Properties.CreateProperty;
+using Booking.Application.Features.Properties.GetMyProperties;
+using Booking.Application.Features.Properties.GetProperty;
 using Booking.Application.Features.Properties.UpdateProperty;
-using Booking.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,4 +50,25 @@ public class PropertyController
         });
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProperty(
+    Guid id,
+    CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetPropertyCommand(id), cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpGet("me")]
+    [Authorize(Roles = "Owner")]
+    public async Task<IActionResult> GetMyProperties(
+    CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetMyPropertiesCommand(), cancellationToken);
+
+        return Ok(result);
+    }
 }
