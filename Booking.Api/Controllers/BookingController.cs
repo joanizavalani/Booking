@@ -2,6 +2,7 @@
 using Booking.Application.Features.Bookings.CompleteBooking;
 using Booking.Application.Features.Bookings.ConfirmBooking;
 using Booking.Application.Features.Bookings.CreateBooking;
+using Booking.Application.Features.Bookings.GetBookingById;
 using Booking.Domain.Bookings;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,16 @@ public class BookingController
             nameof(CreateBooking),
             new { id = bookingId },
             new { Id = bookingId });
+    }
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Owner,Guest")]
+    public async Task<IActionResult> GetBookingById(Guid id)
+    {
+        var result =
+            await _mediator.Send(new GetBookingByIdCommand(id));
+
+        return Ok(result);
     }
 
     [HttpPost("{id}/confirm")]
