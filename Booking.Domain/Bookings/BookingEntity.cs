@@ -98,4 +98,79 @@ public class BookingEntity
 
         Review = review;
     }
+
+    public static BookingEntity Create(
+        Property property,
+        User guest,
+        DateOnly startDate,
+        DateOnly endDate,
+        int guestCount)
+    {
+        return new BookingEntity(
+            id: Guid.NewGuid(),
+            property: property,
+            guest: guest,
+            startDate: startDate,
+            endDate: endDate,
+            guestCount: guestCount,
+            status: BookingStatus.Pending,
+            createdAt: DateTime.UtcNow,
+            confirmedOn: null,
+            rejectedOn: null,
+            completedOn: null,
+            cancelledOn: null,
+            review: null
+        );
+    }
+
+    public void Confirm()
+    {
+        if (Status != BookingStatus.Pending)
+            throw new InvalidOperationException("Only pending bookings can be confirmed.");
+
+        Status = BookingStatus.Confirmed;
+        ConfirmedOn = DateTime.UtcNow;
+        LastModifiedAt = DateTime.UtcNow;
+    }
+
+    public void Reject()
+    {
+        if (Status != BookingStatus.Pending)
+            throw new InvalidOperationException("Only pending bookings can be rejected.");
+
+        Status = BookingStatus.Rejected;
+        RejectedOn = DateTime.UtcNow;
+        LastModifiedAt = DateTime.UtcNow;
+    }
+
+    public void Cancel(Guid currentUserId, Guid ownerId, Guid guestId)
+    {
+        if (Status == BookingStatus.Rejected ||
+            Status == BookingStatus.Cancelled ||
+            Status == BookingStatus.Completed)
+                throw new InvalidOperationException("This booking cannot be cancelled.");
+
+        if (currentUserId != ownerId && currentUserId != guestId)
+            throw new UnauthorizedAccessException(
+                "Only guest or owner can cancel this booking.");
+
+        Status = BookingStatus.Cancelled;
+        CancelledOn = DateTime.UtcNow;
+        LastModifiedAt = DateTime.UtcNow;
+    }
+
+    public void Complete(Guid currentUserId, Guid ownerId)
+    {
+        if (Status != BookingStatus.Confirmed)
+            throw new InvalidOperationException(
+                "Only confirmed bookings can be completed.");
+
+        if (currentUserId != ownerId)
+            throw new UnauthorizedAccessException(
+                "Only owner can complete this booking.");
+
+        Status = BookingStatus.Completed;
+        CompletedOn = DateTime.UtcNow;
+        LastModifiedAt = DateTime.UtcNow;
+    }
 }
