@@ -74,6 +74,8 @@ public static class InfrastructureServicesRegistration
 
         services.AddScoped<IBookingRepository, BookingRepository>();
 
+        services.AddScoped<IReviewRepository, ReviewRepository>();
+
         return services;
     }
 }
